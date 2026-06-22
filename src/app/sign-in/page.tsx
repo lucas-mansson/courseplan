@@ -1,22 +1,12 @@
-import { query } from "@/lib/db";
-import { createUser } from "@/app/users/actions";
+"use client"
 
-export default async function SignIn() {
-  const { rows } = await query('SELECT id, name, email FROM users ORDER BY id');
+import SignInForm from '@/components/signin-form';
 
+export default function SignIn() {
   return (
-    <div>
-      <main>
-        {rows.map((user) => (
-          <li key={user.id}>{user.name} — {user.email}</li>
-        ))}
-        <form action={createUser}>
-          <input name="name" placeholder="Name" required />
-          <input name="email" type="email" placeholder="Email" required />
-          <button type="submit">Create User</button>
-        </form>
-      </main>
-    </div>
+    <main className='w-full h-screen flex items-center justify-center'>
+      <SignInForm />
+    </main>
   );
 }
 
