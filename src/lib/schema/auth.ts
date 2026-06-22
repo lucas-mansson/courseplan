@@ -1,6 +1,22 @@
 import { JWTPayload } from "jose";
 import { z } from "zod"
 
+export const SignInSchema = z.object({
+  email: z.email({ error: 'Please enter a valid email.' }).trim(),
+  password: z.string().trim(),
+})
+
+export type SignInInput = z.infer<typeof SignInSchema>;
+
+export type SignInFormState =
+  | {
+    errors: {
+      email?: string[]
+      form?: string[]
+    }
+  }
+  | undefined
+
 export const SignUpSchema = z.object({
   name: z.string().trim().min(1, 'Name is required').max(100),
   email: z.email({ error: 'Please enter a valid email.' }).trim(),
@@ -28,8 +44,3 @@ export type SignupFormState =
   }
   | undefined
 
-
-export interface SessionPayload extends JWTPayload {
-  userId: unknown;
-  expiresAt: number;
-}

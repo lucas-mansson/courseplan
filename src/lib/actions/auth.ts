@@ -1,10 +1,40 @@
 "use server";
 
-import { SignupFormState, SignUpSchema } from '@/lib/schema/auth';
-import { getUserByEmail, createUser } from '@/lib/data/users';
+import { SignInFormState, SignInSchema, SignupFormState, SignUpSchema } from '@/lib/schema/auth';
+import { getUserByEmail, createUser, getUserWithHashedPasswordByEmail } from '@/lib/data/users';
 import { redirect } from 'next/navigation';
 import bcrypt from "bcrypt";
-import { createSession } from '../session';
+import { createSession } from '@/lib/session';
+
+export async function signIn(_state: SignInFormState, formData: FormData): Promise<SignInFormState> {
+  const validated = SignInSchema.safeParse({
+    email: formData.get("email"),
+    password: formData.get("password")
+  })
+
+  if (!validated.success) {
+    return {
+      errors: validated.error.flatten().fieldErrors
+    };
+  }
+
+  const { email, password } = validated.data;
+
+  const userWithHashedPassword = await getUserWithHashedPasswordByEmail(email);
+
+  const isCorrect = bcrypt.compare(password, userWithHashedPassword.hashed_password)
+
+  if (!isCorrect) {
+    return {
+      errors: {
+        form: ['Something went wrong. Please try again.']
+      }
+    };
+  }
+
+  await createSession(userWithHashedPassword.id)
+  redirect('/');
+}
 
 export async function signUp(_state: SignupFormState, formData: FormData): Promise<SignupFormState> {
   const validated = SignUpSchema.safeParse({
@@ -30,29 +60,17 @@ export async function signUp(_state: SignupFormState, formData: FormData): Promi
     };
   }
 
-  try {
-    const passwordHash = await bcrypt.hash(password, 10);
-    const user = await createUser({ name, email, passwordHash });
+  const passwordHash = await bcrypt.hash(password, 10);
+  const user = await createUser({ name, email, passwordHash });
 
-    if (!user) {
-      return {
-        errors: {
-          form: ['An error occurred while creating your account.']
-        }
-      }
-    }
-
-    await createSession(user.id)
-
-    redirect('/');
-
-  } catch (err) {
-    console.error('Sign up failed', err);
+  if (!user) {
     return {
       errors: {
-        form: ['Something went wrong. Please try again.']
+        form: ['An error occurred while creating your account.']
       }
-    };
+    }
   }
 
+  await createSession(user.id)
+  redirect('/');
 }
