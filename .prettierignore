@@ -1,0 +1,7 @@
+node_modules
+.prettierrc
+.DS_Store
+dist
+dist-ssr
+node_modules/*
+build

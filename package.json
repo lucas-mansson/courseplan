@@ -6,7 +6,8 @@
     "dev": "pnpm migrate:up && next dev",
     "build": "pnpm migrate:up && next build",
     "start": "next start",
-    "lint": "eslint",
+    "lint": "prettier . --check && eslint .",
+    "format": "prettier . --write",
     "migrate:up": "dotenv -e .env.local -- node-pg-migrate up",
     "migrate:down": "dotenv -e .env.local -- node-pg-migrate down"
   },
@@ -30,6 +31,7 @@
     "eslint": "^9.39.4",
     "eslint-config-next": "16.2.7",
     "node-pg-migrate": "^8.0.4",
+    "prettier": "^3.8.4",
     "tailwindcss": "^4.3.0",
     "tsx": "^4.22.4",
     "typescript": "^5.9.3"
