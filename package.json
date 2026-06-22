@@ -3,10 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
+    "dev": "pnpm migrate:up && next dev",
+    "build": "pnpm migrate:up && next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "migrate:up": "dotenv -e .env.local -- node-pg-migrate up",
+    "migrate:down": "dotenv -e .env.local -- node-pg-migrate down"
   },
   "dependencies": {
     "next": "16.2.7",
@@ -20,6 +22,7 @@
     "@types/pg": "^8.20.0",
     "@types/react": "^19.2.17",
     "@types/react-dom": "^19.2.3",
+    "dotenv-cli": "^11.0.0",
     "eslint": "^9.39.4",
     "eslint-config-next": "16.2.7",
     "node-pg-migrate": "^8.0.4",
