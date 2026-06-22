@@ -1,7 +1,7 @@
 import { query } from "@/lib/db";
-import { createUser } from "./users/actions";
+import { createUser } from "@/app/users/actions";
 
-export default async function Home() {
+export default async function SignIn() {
   const { rows } = await query('SELECT id, name, email FROM users ORDER BY id');
 
   return (
@@ -19,3 +19,4 @@ export default async function Home() {
     </div>
   );
 }
+

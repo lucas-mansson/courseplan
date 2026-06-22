@@ -1,0 +1,58 @@
+"use server";
+
+import { SignupFormState, SignUpSchema } from '@/lib/schema/auth';
+import { getUserByEmail, createUser } from '@/lib/data/users';
+import { redirect } from 'next/navigation';
+import bcrypt from "bcrypt";
+import { createSession } from '../session';
+
+export async function signUp(_state: SignupFormState, formData: FormData): Promise<SignupFormState> {
+  const validated = SignUpSchema.safeParse({
+    name: formData.get('name'),
+    email: formData.get('email'),
+    password: formData.get('password'),
+  });
+
+  if (!validated.success) {
+    return {
+      errors: validated.error.flatten().fieldErrors
+    };
+  }
+
+  const { name, email, password } = validated.data;
+
+  const existing = await getUserByEmail(email);
+  if (existing) {
+    return {
+      errors: {
+        email: ['An account with this email already exists']
+      }
+    };
+  }
+
+  try {
+    const passwordHash = await bcrypt.hash(password, 10);
+    const user = await createUser({ name, email, passwordHash });
+
+    if (!user) {
+      return {
+        errors: {
+          form: ['An error occurred while creating your account.']
+        }
+      }
+    }
+
+    await createSession(user.id)
+
+    redirect('/');
+
+  } catch (err) {
+    console.error('Sign up failed', err);
+    return {
+      errors: {
+        form: ['Something went wrong. Please try again.']
+      }
+    };
+  }
+
+}
