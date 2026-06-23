@@ -1,4 +1,4 @@
-import { Pool, PoolClient, QueryResultRow } from 'pg';
+import { Pool, PoolClient, QueryResultRow } from "pg";
 
 declare global {
   var pgPool: Pool | undefined;
@@ -11,11 +11,11 @@ const pool =
     max: 10,
   });
 
-pool.on('error', (err) => {
-  console.error('Unexpected error on idle pg client', err);
+pool.on("error", (err) => {
+  console.error("Unexpected error on idle pg client", err);
 });
 
-if (process.env.NODE_ENV !== 'production') {
+if (process.env.NODE_ENV !== "production") {
   global.pgPool = pool;
 }
 
@@ -28,7 +28,8 @@ export async function query<T extends QueryResultRow = QueryResultRow>(
   if (process.env.NODE_ENV !== "production") {
     console.log("query", {
       sql,
-      duration: Date.now() - start, rows: result.rowCount
+      duration: Date.now() - start,
+      rows: result.rowCount,
     });
   }
   return result;

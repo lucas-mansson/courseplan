@@ -1,4 +1,4 @@
-import { query } from '@/lib/db';
+import { query } from "@/lib/db";
 
 interface User {
   id: string;
@@ -11,7 +11,9 @@ interface UserWithHashedPassword extends User {
   password_hash: string;
 }
 
-export async function getUserWithHashedPasswordByEmail(email: string): Promise<UserWithHashedPassword> {
+export async function getUserWithHashedPasswordByEmail(
+  email: string
+): Promise<UserWithHashedPassword> {
   const { rows } = await query<UserWithHashedPassword>(
     `SELECT id, name, email, created_at, password_hash FROM users WHERE email = $1`,
     [email]

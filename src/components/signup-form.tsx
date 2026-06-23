@@ -1,6 +1,6 @@
-'use client'
+"use client";
 
-import { signUp } from '@/lib/actions/auth'
+import { signUp } from "@/lib/actions/auth";
 import {
   Card,
   CardAction,
@@ -8,24 +8,28 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
-import { useActionState } from 'react'
-import { Button } from './ui/button'
-import { useRouter } from 'next/navigation'
-import { Label } from './ui/label'
-import { Input } from './ui/input'
+} from "@/components/ui/card";
+import { useActionState } from "react";
+import { Button } from "./ui/button";
+import { useRouter } from "next/navigation";
+import { Label } from "./ui/label";
+import { Input } from "./ui/input";
 
 export default function SignupForm() {
-  const [state, action, pending] = useActionState(signUp, undefined)
-  const router = useRouter()
+  const [state, action, pending] = useActionState(signUp, undefined);
+  const router = useRouter();
 
   return (
     <Card className="w-full max-w-sm">
-      <form action={action} className='w-full flex flex-col gap-4'>
+      <form action={action} className="w-full flex flex-col gap-4">
         <CardHeader>
           <CardTitle>Sign up for CoursePlan</CardTitle>
           <CardAction>
-            <Button disabled={pending} onClick={() => router.push("/sign-in")} variant="link">
+            <Button
+              disabled={pending}
+              onClick={() => router.push("/sign-in")}
+              variant="link"
+            >
               Already have an account?
             </Button>
           </CardAction>
@@ -34,11 +38,7 @@ export default function SignupForm() {
           <div className="flex flex-col gap-6">
             <div>
               <Label htmlFor="email">Name</Label>
-              <Input
-                id="name"
-                name='name'
-                required
-              />
+              <Input id="name" name="name" required />
             </div>
             {state?.errors?.name && <p>{state.errors.name}</p>}
             <div>
@@ -46,7 +46,7 @@ export default function SignupForm() {
               <Input
                 id="email"
                 type="email"
-                name='email'
+                name="email"
                 placeholder="email@example.com"
                 required
               />
@@ -57,7 +57,7 @@ export default function SignupForm() {
               <div className="flex items-center">
                 <Label htmlFor="password">Password</Label>
               </div>
-              <Input id="password" name='password' type="password" required />
+              <Input id="password" name="password" type="password" required />
             </div>
             {state?.errors?.password && (
               <div>
@@ -78,5 +78,5 @@ export default function SignupForm() {
         </CardFooter>
       </form>
     </Card>
-  )
+  );
 }

@@ -1,58 +1,76 @@
 "use server";
 
-import { SignInFormState, SignInSchema, SignupFormState, SignUpSchema } from '@/lib/schema/auth';
-import { getUserByEmail, createUser, getUserWithHashedPasswordByEmail } from '@/lib/data/users';
-import { redirect } from 'next/navigation';
+import {
+  SignInFormState,
+  SignInSchema,
+  SignupFormState,
+  SignUpSchema,
+} from "@/lib/schema/auth";
+import {
+  getUserByEmail,
+  createUser,
+  getUserWithHashedPasswordByEmail,
+} from "@/lib/data/users";
+import { redirect } from "next/navigation";
 import bcrypt from "bcrypt";
-import { createSession } from '@/lib/session';
+import { createSession } from "@/lib/session";
 
-export async function signIn(_state: SignInFormState, formData: FormData): Promise<SignInFormState> {
+export async function signIn(
+  _state: SignInFormState,
+  formData: FormData
+): Promise<SignInFormState> {
   const validated = SignInSchema.safeParse({
     email: formData.get("email"),
-    password: formData.get("password")
-  })
+    password: formData.get("password"),
+  });
 
   if (!validated.success) {
     return {
-      errors: validated.error.flatten().fieldErrors
+      errors: validated.error.flatten().fieldErrors,
     };
   }
 
   const { email, password } = validated.data;
-  const errorMsg = "Log in failed."
+  const errorMsg = "Log in failed.";
 
   const userWithHashedPassword = await getUserWithHashedPasswordByEmail(email);
   if (!userWithHashedPassword) {
     return {
       errors: {
-        form: [errorMsg]
-      }
+        form: [errorMsg],
+      },
     };
   }
 
-  const isCorrect = await bcrypt.compare(password, userWithHashedPassword.password_hash)
+  const isCorrect = await bcrypt.compare(
+    password,
+    userWithHashedPassword.password_hash
+  );
   if (!isCorrect) {
     return {
       errors: {
-        form: [errorMsg]
-      }
+        form: [errorMsg],
+      },
     };
   }
 
-  await createSession(userWithHashedPassword.id)
-  redirect('/');
+  await createSession(userWithHashedPassword.id);
+  redirect("/");
 }
 
-export async function signUp(_state: SignupFormState, formData: FormData): Promise<SignupFormState> {
+export async function signUp(
+  _state: SignupFormState,
+  formData: FormData
+): Promise<SignupFormState> {
   const validated = SignUpSchema.safeParse({
-    name: formData.get('name'),
-    email: formData.get('email'),
-    password: formData.get('password'),
+    name: formData.get("name"),
+    email: formData.get("email"),
+    password: formData.get("password"),
   });
 
   if (!validated.success) {
     return {
-      errors: validated.error.flatten().fieldErrors
+      errors: validated.error.flatten().fieldErrors,
     };
   }
 
@@ -62,8 +80,8 @@ export async function signUp(_state: SignupFormState, formData: FormData): Promi
   if (existing) {
     return {
       errors: {
-        email: ['An account with this email already exists']
-      }
+        email: ["An account with this email already exists"],
+      },
     };
   }
 
@@ -73,11 +91,11 @@ export async function signUp(_state: SignupFormState, formData: FormData): Promi
   if (!user) {
     return {
       errors: {
-        form: ['An error occurred while creating your account.']
-      }
-    }
+        form: ["An error occurred while creating your account."],
+      },
+    };
   }
 
-  await createSession(user.id)
-  redirect('/');
+  await createSession(user.id);
+  redirect("/");
 }

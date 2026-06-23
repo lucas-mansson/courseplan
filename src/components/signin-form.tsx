@@ -1,6 +1,6 @@
-'use client'
+"use client";
 
-import { useActionState } from 'react'
+import { useActionState } from "react";
 import {
   Card,
   CardAction,
@@ -9,27 +9,31 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { signIn } from '@/lib/actions/auth'
-import { Button } from '@/components/ui/button'
-import { useRouter } from 'next/navigation'
+} from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { signIn } from "@/lib/actions/auth";
+import { Button } from "@/components/ui/button";
+import { useRouter } from "next/navigation";
 
 export default function SignInForm() {
-  const [state, action, pending] = useActionState(signIn, undefined)
-  const router = useRouter()
+  const [state, action, pending] = useActionState(signIn, undefined);
+  const router = useRouter();
 
   return (
     <Card className="w-full max-w-sm">
-      <form action={action} className='w-full flex flex-col gap-4'>
+      <form action={action} className="w-full flex flex-col gap-4">
         <CardHeader>
           <CardTitle>Login to your account</CardTitle>
           <CardDescription>
             Enter your email below to login to your account
           </CardDescription>
           <CardAction>
-            <Button disabled={pending} onClick={() => router.push("/sign-up")} variant="link">
+            <Button
+              disabled={pending}
+              onClick={() => router.push("/sign-up")}
+              variant="link"
+            >
               Sign Up
             </Button>
           </CardAction>
@@ -41,7 +45,7 @@ export default function SignInForm() {
               <Input
                 id="email"
                 type="email"
-                name='email'
+                name="email"
                 placeholder="m@example.com"
                 required
               />
@@ -50,9 +54,11 @@ export default function SignInForm() {
               <div className="flex items-center">
                 <Label htmlFor="password">Password</Label>
               </div>
-              <Input id="password" name='password' type="password" required />
+              <Input id="password" name="password" type="password" required />
             </div>
-            {state?.errors?.form && <p className='text-red-500'>{state.errors.form}</p>}
+            {state?.errors?.form && (
+              <p className="text-red-500">{state.errors.form}</p>
+            )}
           </div>
         </CardContent>
         <CardFooter className="flex-col gap-2">
@@ -62,5 +68,5 @@ export default function SignInForm() {
         </CardFooter>
       </form>
     </Card>
-  )
+  );
 }
