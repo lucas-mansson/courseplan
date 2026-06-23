@@ -3,7 +3,7 @@ import { Course } from "@/lib/types/courses";
 import { CourseInput } from "@/lib/schema/courses";
 
 export async function getCoursesByUserId(userId: string) {
-  const { rows } = await query<Course[]>(
+  const { rows } = await query<Course>(
     `SELECT 
       uc.id, 
       uc.code,
@@ -31,8 +31,6 @@ export async function getCoursesByUserId(userId: string) {
     `,
     [userId]
   );
-
-  console.log(rows);
 
   return rows;
 }
