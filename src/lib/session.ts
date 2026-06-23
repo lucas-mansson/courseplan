@@ -60,6 +60,10 @@ export async function encrypt(payload: SessionPayload) {
 }
 
 export async function decrypt(session: string | undefined = "") {
+  if (!session) {
+    console.warn("Could not find session")
+    return
+  }
   try {
     const { payload } = await jwtVerify(session, ENCODED_KEY, {
       algorithms: [HASHING_ALGORITHM],
