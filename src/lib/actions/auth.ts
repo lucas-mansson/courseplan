@@ -12,8 +12,6 @@ export async function signIn(_state: SignInFormState, formData: FormData): Promi
     password: formData.get("password")
   })
 
-  console.log(validated.success)
-
   if (!validated.success) {
     return {
       errors: validated.error.flatten().fieldErrors
@@ -21,15 +19,22 @@ export async function signIn(_state: SignInFormState, formData: FormData): Promi
   }
 
   const { email, password } = validated.data;
+  const errorMsg = "Log in failed."
+
   const userWithHashedPassword = await getUserWithHashedPasswordByEmail(email);
-
-  console.log(userWithHashedPassword.hashed_password)
-  console.log(password)
-
-  if (!userWithHashedPassword || !bcrypt.compare(password, userWithHashedPassword.hashed_password)) {
+  if (!userWithHashedPassword) {
     return {
       errors: {
-        form: ['Something went wrong. Please try again.']
+        form: [errorMsg]
+      }
+    };
+  }
+
+  const isCorrect = !await bcrypt.compare(password, userWithHashedPassword.hashed_password)
+  if (!isCorrect) {
+    return {
+      errors: {
+        form: [errorMsg]
       }
     };
   }

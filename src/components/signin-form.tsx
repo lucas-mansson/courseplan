@@ -22,44 +22,45 @@ export default function SignInForm() {
 
   return (
     <Card className="w-full max-w-sm">
-      <CardHeader>
-        <CardTitle>Login to your account</CardTitle>
-        <CardDescription>
-          Enter your email below to login to your account
-        </CardDescription>
-        <CardAction>
-          <Button disabled={pending} onClick={() => router.push("/sign-up")} variant="link">
-            Sign Up
-          </Button>
-        </CardAction>
-      </CardHeader>
-      <CardContent>
-        <form action={action}>
+      <form action={action} className='w-full flex flex-col gap-4'>
+        <CardHeader>
+          <CardTitle>Login to your account</CardTitle>
+          <CardDescription>
+            Enter your email below to login to your account
+          </CardDescription>
+          <CardAction>
+            <Button disabled={pending} onClick={() => router.push("/sign-up")} variant="link">
+              Sign Up
+            </Button>
+          </CardAction>
+        </CardHeader>
+        <CardContent>
           <div className="flex flex-col gap-6">
             <div className="grid gap-2">
               <Label htmlFor="email">Email</Label>
               <Input
                 id="email"
                 type="email"
+                name='email'
                 placeholder="m@example.com"
                 required
               />
             </div>
-            {state?.errors?.email && <p>{state.errors.email}</p>}
+            {state?.errors?.form && <p>{state.errors.form}</p>}
             <div className="grid gap-2">
               <div className="flex items-center">
                 <Label htmlFor="password">Password</Label>
               </div>
-              <Input id="password" type="password" required />
+              <Input id="password" name='password' type="password" required />
             </div>
           </div>
-        </form>
-      </CardContent>
-      <CardFooter className="flex-col gap-2">
-        <Button type="submit" className="w-full">
-          Login
-        </Button>
-      </CardFooter>
+        </CardContent>
+        <CardFooter className="flex-col gap-2">
+          <Button type="submit" className="w-full">
+            Login
+          </Button>
+        </CardFooter>
+      </form>
     </Card>
   )
 }

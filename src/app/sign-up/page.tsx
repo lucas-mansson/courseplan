@@ -2,11 +2,9 @@ import SignupForm from "@/components/signup-form";
 
 export default async function SignUp() {
   return (
-    <div>
-      <main>
-        <SignupForm />
-      </main>
-    </div>
+    <main className="w-full h-screen flex items-center justify-center">
+      <SignupForm />
+    </main>
   );
 }
 
