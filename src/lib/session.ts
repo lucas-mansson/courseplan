@@ -8,8 +8,8 @@ import { redirect } from "next/navigation";
 const SECRET_KEY = process.env.SESSION_SECRET;
 const ENCODED_KEY = new TextEncoder().encode(SECRET_KEY);
 
-const COOKIE_STORE_SESSION_KEY = "session"
-const HASHING_ALGORITHM = "HS256"
+const COOKIE_STORE_SESSION_KEY = "session";
+const HASHING_ALGORITHM = "HS256";
 
 export interface SessionPayload extends JWTPayload {
   userId: unknown;
@@ -36,16 +36,15 @@ export async function createSession(userId: string) {
 }
 
 export const verifySession = cache(async () => {
-  const cookie = (await cookies()).get(COOKIE_STORE_SESSION_KEY)?.value
-  const session = await decrypt(cookie)
+  const cookie = (await cookies()).get(COOKIE_STORE_SESSION_KEY)?.value;
+  const session = await decrypt(cookie);
 
   if (!session?.userId) {
-    redirect('/sign-in')
+    redirect("/sign-in");
   }
 
-  return { isAuth: true, userId: session.userId }
-})
-
+  return { isAuth: true, userId: session.userId };
+});
 
 export async function deleteSession() {
   const cookieStore = await cookies();
