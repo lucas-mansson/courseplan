@@ -1,3 +1,5 @@
+"use server";
+
 import { CreateCourseFormState } from "@/lib/types/form";
 import { CreateCourseSchema } from "@/lib/schema/courses";
 import { verifySession } from "@/lib/session";

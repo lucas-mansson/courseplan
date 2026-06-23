@@ -54,7 +54,7 @@ export default function CreateCourseForm() {
         </CardContent>
         <CardFooter className="flex-col gap-2">
           <Button type="submit" className="w-full">
-            Login
+            Create course
           </Button>
         </CardFooter>
       </form>

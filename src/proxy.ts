@@ -2,7 +2,7 @@ import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 import { decrypt } from "@/lib/session";
 
-const protectedRoutes = ["/"];
+const protectedRoutes = ["/", "/courses", "/courses/create"];
 
 const unauthenticatedRoutes = ["/sign-in", "/sign-up"];
 
@@ -26,8 +26,3 @@ export default async function proxy(request: NextRequest) {
   }
   return NextResponse.next();
 }
-
-// Routes Proxy should not run on
-export const config = {
-  matcher: ["/((?!api|_next/static|_next/image|.*\\.png$).*)"],
-};
