@@ -41,7 +41,7 @@ export const up = (pgm) => {
     },
     code: { type: "varchar(255)", notNull: true },
     name: { type: "varchar(255)", notNull: true },
-    link: { type: "varchar(255)", notNull: true },
+    link: { type: "varchar(255)" },
   });
 
   pgm.createType("task_status", [
@@ -65,11 +65,16 @@ export const up = (pgm) => {
     },
     name: { type: "varchar(255)", notNull: true },
     description: { type: "varchar(255)" },
-    deadline: { type: "timestamp", notNull: true },
+    deadline: { type: "timestamp" },
     location: { type: "varchar(255)" },
     link: { type: "varchar(255)" },
     comment: { type: "text" },
-    status: { type: "task_status", notNull: true, default: "not_started" },
+    status: {
+      type: "task_status",
+      notNull: true,
+      default: "not_started",
+      onDelete: "CASCADE",
+    },
   });
 };
 
@@ -79,8 +84,8 @@ export const up = (pgm) => {
  * @returns {Promise<void> | void}
  */
 export const down = (pgm) => {
-  pgm.dropTable("users");
-  pgm.dropTable("user_courses");
   pgm.dropTable("user_course_tasks");
+  pgm.dropTable("user_courses");
   pgm.dropType("task_status");
+  pgm.dropTable("users");
 };
