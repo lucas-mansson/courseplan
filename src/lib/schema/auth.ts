@@ -1,4 +1,3 @@
-import { JWTPayload } from "jose";
 import { z } from "zod";
 
 export const SignInSchema = z.object({

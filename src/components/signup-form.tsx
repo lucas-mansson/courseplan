@@ -10,10 +10,10 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { useActionState } from "react";
-import { Button } from "./ui/button";
+import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
-import { Label } from "./ui/label";
-import { Input } from "./ui/input";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
 
 export default function SignupForm() {
   const [state, action, pending] = useActionState(signUp, undefined);
