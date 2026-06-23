@@ -46,13 +46,13 @@ export default function SignInForm() {
                 required
               />
             </div>
-            {state?.errors?.form && <p>{state.errors.form}</p>}
             <div className="grid gap-2">
               <div className="flex items-center">
                 <Label htmlFor="password">Password</Label>
               </div>
               <Input id="password" name='password' type="password" required />
             </div>
+            {state?.errors?.form && <p className='text-red-500'>{state.errors.form}</p>}
           </div>
         </CardContent>
         <CardFooter className="flex-col gap-2">

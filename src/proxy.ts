@@ -26,11 +26,7 @@ export default async function proxy(request: NextRequest) {
     return NextResponse.redirect(new URL("/sign-in", request.nextUrl))
   }
 
-  if (
-    isUnauthenticatedRoute &&
-    isValidSession &&
-    !request.nextUrl.pathname.startsWith("/")
-  ) {
+  if (isUnauthenticatedRoute && isValidSession) {
     return NextResponse.redirect(new URL("/", request.nextUrl))
   }
   return NextResponse.next();

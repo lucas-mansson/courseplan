@@ -8,7 +8,7 @@ interface User {
 }
 
 interface UserWithHashedPassword extends User {
-  hashed_password: string;
+  password_hash: string;
 }
 
 export async function getUserWithHashedPasswordByEmail(email: string): Promise<UserWithHashedPassword> {

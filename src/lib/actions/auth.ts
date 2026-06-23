@@ -30,7 +30,7 @@ export async function signIn(_state: SignInFormState, formData: FormData): Promi
     };
   }
 
-  const isCorrect = !await bcrypt.compare(password, userWithHashedPassword.hashed_password)
+  const isCorrect = await bcrypt.compare(password, userWithHashedPassword.password_hash)
   if (!isCorrect) {
     return {
       errors: {
