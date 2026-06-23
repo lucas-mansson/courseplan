@@ -10,10 +10,11 @@ export async function handleCreateCourse(
   _state: CreateCourseFormState,
   formData: FormData
 ): Promise<CreateCourseFormState> {
+
   const validated = CreateCourseSchema.safeParse({
     code: formData.get("code"),
     name: formData.get("name"),
-    link: formData.get("link"),
+    link: formData.get("link") || null,
   });
 
   if (!validated.success) {

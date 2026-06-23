@@ -60,7 +60,7 @@ export const up = (pgm) => {
     user_course_id: {
       type: "uuid",
       notNull: true,
-      references: "user_courses",
+      references: "users",
       onDelete: "CASCADE",
     },
     name: { type: "varchar(255)", notNull: true },

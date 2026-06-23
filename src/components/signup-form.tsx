@@ -1,6 +1,6 @@
 "use client";
 
-import { signUp } from "@/lib/actions/auth";
+import { handleSignUp } from "@/lib/actions/auth";
 import {
   Card,
   CardAction,
@@ -16,7 +16,7 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 
 export default function SignupForm() {
-  const [state, action, pending] = useActionState(signUp, undefined);
+  const [state, action, pending] = useActionState(handleSignUp, undefined);
   const router = useRouter();
 
   return (

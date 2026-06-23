@@ -42,7 +42,7 @@ export default function CreateCourseForm() {
             </div>
             <div className="grid gap-2">
               <Label htmlFor="code">Link</Label>
-              <Input id="link" name="link" required />
+              <Input id="link" name="link" />
               {state?.errors?.link && (
                 <p className="text-red-500">{state.errors.link}</p>
               )}
