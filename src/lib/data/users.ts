@@ -13,10 +13,18 @@ interface UserWithHashedPassword extends User {
 
 export async function getUserWithHashedPasswordByEmail(
   email: string
-): Promise<UserWithHashedPassword> {
+): Promise<UserWithHashedPassword | null> {
   const { rows } = await query<UserWithHashedPassword>(
     `SELECT id, name, email, created_at, password_hash FROM users WHERE email = $1`,
     [email]
+  );
+  return rows[0] ?? null;
+}
+
+export async function getUserById(userId: string): Promise<User | null> {
+  const { rows } = await query<User>(
+    `SELECT id, name, email, created_at FROM users WHERE id = $1`,
+    [userId]
   );
   return rows[0] ?? null;
 }
