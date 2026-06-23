@@ -4,9 +4,9 @@
   "private": true,
   "scripts": {
     "dev": "pnpm migrate:up && next dev",
-    "build": "pnpm migrate:up && next build",
+    "build": "pnpm migrate:up && pnpm lint && next build",
     "start": "next start",
-    "lint": "prettier . --check && eslint .",
+    "lint": "prettier . --check && eslint . && tsc -b",
     "format": "prettier . --write",
     "migrate:up": "dotenv -e .env.local -- node-pg-migrate up",
     "migrate:down": "dotenv -e .env.local -- node-pg-migrate down"
