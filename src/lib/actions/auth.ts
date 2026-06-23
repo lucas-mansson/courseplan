@@ -1,11 +1,10 @@
 "use server";
 
 import {
-  SignInFormState,
   SignInSchema,
-  SignupFormState,
   SignUpSchema,
 } from "@/lib/schema/auth";
+import { SignInFormState, SignUpFormState } from "@/lib/types/form";
 import {
   getUserByEmail,
   createUser,
@@ -59,9 +58,9 @@ export async function signIn(
 }
 
 export async function signUp(
-  _state: SignupFormState,
+  _state: SignUpFormState,
   formData: FormData
-): Promise<SignupFormState> {
+): Promise<SignUpFormState> {
   const validated = SignUpSchema.safeParse({
     name: formData.get("name"),
     email: formData.get("email"),

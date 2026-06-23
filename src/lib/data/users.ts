@@ -1,15 +1,5 @@
 import { query } from "@/lib/db";
-
-interface User {
-  id: string;
-  name: string;
-  email: string;
-  created_at: string;
-}
-
-interface UserWithHashedPassword extends User {
-  password_hash: string;
-}
+import { User, UserWithHashedPassword } from "@/lib/types/users";
 
 export async function getUserWithHashedPasswordByEmail(
   email: string

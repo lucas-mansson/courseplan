@@ -7,15 +7,6 @@ export const SignInSchema = z.object({
 
 export type SignInInput = z.infer<typeof SignInSchema>;
 
-export type SignInFormState =
-  | {
-      errors: {
-        email?: string[];
-        form?: string[];
-      };
-    }
-  | undefined;
-
 export const SignUpSchema = z.object({
   name: z.string().trim().min(1, "Name is required").max(100),
   email: z.email({ error: "Please enter a valid email." }).trim(),
@@ -32,13 +23,3 @@ export const SignUpSchema = z.object({
 
 export type SignUpInput = z.infer<typeof SignUpSchema>;
 
-export type SignupFormState =
-  | {
-      errors: {
-        name?: string[];
-        email?: string[];
-        password?: string[];
-        form?: string[];
-      };
-    }
-  | undefined;
