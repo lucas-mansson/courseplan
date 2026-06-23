@@ -73,7 +73,6 @@ export const up = (pgm) => {
       type: "task_status",
       notNull: true,
       default: "not_started",
-      onDelete: "CASCADE",
     },
   });
 };

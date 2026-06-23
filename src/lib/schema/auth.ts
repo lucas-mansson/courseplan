@@ -22,4 +22,3 @@ export const SignUpSchema = z.object({
 });
 
 export type SignUpInput = z.infer<typeof SignUpSchema>;
-

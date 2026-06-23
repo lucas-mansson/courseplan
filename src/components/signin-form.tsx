@@ -12,12 +12,12 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { signIn } from "@/lib/actions/auth";
+import { handleSignIn } from "@/lib/actions/auth";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 
 export default function SignInForm() {
-  const [state, action, pending] = useActionState(signIn, undefined);
+  const [state, action, pending] = useActionState(handleSignIn, undefined);
   const router = useRouter();
 
   return (

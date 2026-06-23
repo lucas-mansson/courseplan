@@ -8,4 +8,3 @@ export interface User {
 export interface UserWithHashedPassword extends User {
   password_hash: string;
 }
-

@@ -43,7 +43,10 @@ export const verifySession = cache(async () => {
     redirect("/sign-in");
   }
 
-  return { isAuth: true, userId: session.userId };
+  console.log(session.userId);
+  console.log(typeof session.userId);
+
+  return { isAuth: true, userId: session.userId as string };
 });
 
 export async function deleteSession() {
@@ -61,8 +64,8 @@ export async function encrypt(payload: SessionPayload) {
 
 export async function decrypt(session: string | undefined = "") {
   if (!session) {
-    console.warn("Could not find session")
-    return
+    console.warn("Could not find session");
+    return;
   }
   try {
     const { payload } = await jwtVerify(session, ENCODED_KEY, {

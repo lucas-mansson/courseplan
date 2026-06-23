@@ -1,9 +1,6 @@
 "use server";
 
-import {
-  SignInSchema,
-  SignUpSchema,
-} from "@/lib/schema/auth";
+import { SignInSchema, SignUpSchema } from "@/lib/schema/auth";
 import { SignInFormState, SignUpFormState } from "@/lib/types/form";
 import {
   getUserByEmail,
@@ -14,7 +11,7 @@ import { redirect } from "next/navigation";
 import bcrypt from "bcrypt";
 import { createSession } from "@/lib/session";
 
-export async function signIn(
+export async function handleSignIn(
   _state: SignInFormState,
   formData: FormData
 ): Promise<SignInFormState> {
@@ -57,7 +54,7 @@ export async function signIn(
   redirect("/");
 }
 
-export async function signUp(
+export async function handleSignUp(
   _state: SignUpFormState,
   formData: FormData
 ): Promise<SignUpFormState> {
