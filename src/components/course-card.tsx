@@ -5,6 +5,7 @@ import { ChevronsUpDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import TaskList from "@/components/task-list";
+import AddTaskButton from "@/components/add-task-button";
 
 interface CourseCardProps {
   course: Course;
@@ -28,6 +29,7 @@ export function CourseCard({ course }: CourseCardProps) {
       <CollapsibleContent>
         <TaskList tasks={course.tasks} />
       </CollapsibleContent>
+      <AddTaskButton courseId={course.id} />
     </Collapsible>
   )
 }

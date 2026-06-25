@@ -17,9 +17,12 @@ export interface Task {
   status: TaskStatus;
 }
 
-export type TaskStatus =
-  | "not_started"
-  | "started"
-  | "handed_in"
-  | "completed"
-  | "retake";
+export const TASK_STATUSES = [
+  "not_started",
+  "started",
+  "handed_in",
+  "completed",
+  "retake",
+] as const;
+
+export type TaskStatus = typeof TASK_STATUSES[number];
