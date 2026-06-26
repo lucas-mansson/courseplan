@@ -16,4 +16,3 @@ export type CreateCourseFormState = FormState<ToFormState<CourseInput>>;
 
 export type CreateTaskFormState = FormState<ToFormState<TaskInput>>;
 
-
